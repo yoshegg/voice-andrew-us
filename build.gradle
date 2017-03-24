@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'de.uni-saarland.coli.voicebuilding2016WS.group1'
-version '0.1-SNAPSHOT'
+version '0.2-SNAPSHOT'
 
 voice {
     name = 'endru'
