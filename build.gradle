@@ -31,7 +31,9 @@ task unpackWav(type: Copy) {
 task downloadMetadata(type: Download) {
     src 'https://github.com/yoshegg/voice-andrew-us-data/archive/master.zip'
     dest "$buildDir/metadata.zip"
-    overwrite false
+    // overwrite false
+    // apparently this does not work, but our data repository is very small
+    onlyIfNewer true
 }
 
 // extract the .txt files to our build directory
@@ -56,6 +58,12 @@ task unpackTextGrids(type: Copy) {
         }
     }
     into "$buildDir/TextGrid"
+    from zipTree("$buildDir/metadata.zip"), {
+        include '**/manuallyAdjustedTextGrid/*.TextGrid'
+        eachFile {
+            it.path = it.name
+        }
+    }
     includeEmptyDirs = false
     dependsOn downloadMetadata
 }
@@ -75,7 +83,7 @@ task convertTextGrids {
                 script.println "Read from file... $textGridFile"
                 script.println "Extract tier... 3"
                 script.println "Save as Xwaves label file... $labFile"
-                script.println "printline Wrote $labFile.name"
+                //script.println "printline Wrote $labFile.name"
             }
         }
         exec {
