@@ -7,3 +7,8 @@
 # Gradle
 .gradle/
 build/
+/.nb-gradle/
+
+# IDEA
+.idea/
+*.iml
