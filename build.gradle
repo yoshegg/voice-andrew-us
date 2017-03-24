@@ -1,11 +1,30 @@
 plugins {
     id 'de.dfki.mary.voicebuilding-legacy' version '5.2.0'
+    id 'de.undercouch.download' version '3.2.0'
 }
 
-group 'de.uni-saarland.coli.voicebuildilngWS2016.group1.voice-andrew-us'
-version '0.1-SNAPSHOT'
+group "de.uni-saarland.coli.voicebuildilngWS2016.group1.voice-andrew-us"
+version "0.1-SNAPSHOT"
 
 voice {
     name = 'endru'
     gender = 'male'
+}
+
+import de.undercouch.gradle.tasks.download.Download
+
+task downloadWavZip(type: Download) {
+    src 'https://github.com/yoshegg/voice-andrew-us-data/releases/download/audio/wav.zip'
+    dest buildDir
+    overwrite false
+}
+
+task unpackWav(type: Copy) {
+    from zipTree("$buildDir/wav.zip")
+    into buildDir
+    dependsOn downloadWavZip
+}
+
+legacyInit {
+    dependsOn unpackWav
 }
