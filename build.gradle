@@ -1,2 +1,11 @@
-group 'de.coli.voicebuildilng.group1.voice-andrew-us'
+plugins {
+    id 'de.dfki.mary.voicebuilding-legacy' version '5.2.0'
+}
+
+group 'de.uni-saarland.coli.voicebuildilngWS2016.group1.voice-andrew-us'
 version '0.1-SNAPSHOT'
+
+voice {
+    name = 'endru'
+    gender = 'male'
+}
