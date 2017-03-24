@@ -22,8 +22,8 @@ task downloadWavZip(type: Download) {
 
 // extract this .wav files into our build directory
 task unpackWav(type: Copy) {
-    from zipTree("$buildDir/wav.zip")
-    into buildDir
+    from zipTree("$buildDir/normalized_wavs.zip")
+    into "$buildDir/wav/"
     dependsOn downloadWavZip
 }
 
@@ -63,6 +63,8 @@ task unpackTextGrids(type: Copy) {
 // covert .TextGrids to .lab
 task convertTextGrids {
     ext.labDir = file("$buildDir/lab_maus")
+    dependsOn unpackTextGrids
+    dependsOn unpackText
     outputs.dir labDir
     doLast {
         labDir.mkdirs()
