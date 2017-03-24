@@ -1,10 +1,10 @@
 plugins {
     id 'de.dfki.mary.voicebuilding-legacy' version '5.2.0'
-    id 'de.undercouch.download' version '3.2.0'
+    id "de.undercouch.download" version "3.2.0"
 }
 
-group "de.uni-saarland.coli.voicebuildilngWS2016.group1.voice-andrew-us"
-version "0.1-SNAPSHOT"
+group 'de.uni-saarland.coli.voicebuilding2016WS.group1'
+version '0.1-SNAPSHOT'
 
 voice {
     name = 'endru'
@@ -13,18 +13,109 @@ voice {
 
 import de.undercouch.gradle.tasks.download.Download
 
+// download the .zip file from the second release containing normalized .wav files
 task downloadWavZip(type: Download) {
-    src 'https://github.com/yoshegg/voice-andrew-us-data/releases/download/audio/wav.zip'
+    src 'https://github.com/yoshegg/voice-andrew-us-data/releases/download/audio_normalized/normalized_wavs.zip'
     dest buildDir
     overwrite false
 }
 
+// extract this .wav files into our build directory
 task unpackWav(type: Copy) {
     from zipTree("$buildDir/wav.zip")
     into buildDir
     dependsOn downloadWavZip
 }
 
+// download a copy of the data repository
+task downloadMetadata(type: Download) {
+    src 'https://github.com/yoshegg/voice-andrew-us-data/archive/master.zip'
+    dest "$buildDir/metadata.zip"
+    overwrite false
+}
+
+// extract the .txt files to our build directory
+task unpackText(type: Copy) {
+    from zipTree("$buildDir/metadata.zip"), {
+        include '**/txt/*.txt'
+        eachFile {
+            it.path = it.name
+        }
+    }
+    into "$buildDir/text"
+    includeEmptyDirs = false
+    dependsOn downloadMetadata
+}
+
+// extract the processed webMAUS .TextGrid files to our build directory
+task unpackTextGrids(type: Copy) {
+    from zipTree("$buildDir/metadata.zip"), {
+        include '**/textGrid/*.TextGrid'
+        eachFile {
+            it.path = it.name
+        }
+    }
+    into "$buildDir/TextGrid"
+    includeEmptyDirs = false
+    dependsOn downloadMetadata
+}
+
+// covert .TextGrids to .lab
+task convertTextGrids {
+    ext.labDir = file("$buildDir/lab_maus")
+    outputs.dir labDir
+    doLast {
+        labDir.mkdirs()
+        def scriptFile = file("$temporaryDir/script.praat")
+        scriptFile.withWriter { script ->
+            fileTree(buildDir).include('TextGrid/*.TextGrid').each { textGridFile ->
+                def labFile = file("$labDir/${textGridFile.name - 'TextGrid' + 'lab'}")
+                script.println "Read from file... $textGridFile"
+                script.println "Extract tier... 3"
+                script.println "Save as Xwaves label file... $labFile"
+                script.println "printline Wrote $labFile.name"
+            }
+        }
+        exec {
+            commandLine 'praat', '--run', scriptFile
+        }
+    }
+}
+
+// for maryTTS, some labels must be replaced
+task remapLabels(type: Copy) {
+    from convertTextGrids.labDir
+    into "$buildDir/lab"
+    dependsOn convertTextGrids
+    filter {
+        def phoneMapping = [
+                '<p:>': '_',
+                'i:'  : 'i',
+                'O:'  : 'O',
+                '3`'  : 'r=',
+                'Q'   : 'A',
+                'R'   : 'r',
+                'u:'  : 'u',
+                'aI'  : 'AI',
+                'eI'  : 'EI'
+        ]
+        def fields = it.tokenize()
+        if (fields.size() == 3) {
+            fields[-1] = phoneMapping[fields[-1]] ?: fields[-1]
+        }
+        fields.join(' ')
+    }
+}
+
 legacyInit {
-    dependsOn unpackWav
+    dependsOn unpackWav, unpackText, remapLabels
+}
+
+// this is a fix for maryTTS
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.name == 'groovy-all') {
+            details.useTarget group: details.requested.group, name: details.requested.name, version: '2.4.7'
+        }
+    }
 }
