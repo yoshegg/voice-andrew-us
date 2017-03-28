@@ -118,8 +118,9 @@ task remapLabels(type: Copy) {
 }
 
 task copyDockerShellScriptToBuild(type: Copy) {
-  from "dockerScript.sh"
-  into "build/dockerScript.sh"
+  from "."
+  into "build"
+  include "dockerScript.sh"
 }
 
 legacyInit {
