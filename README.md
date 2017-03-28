@@ -29,7 +29,7 @@ To actually test the voice, enter
 ```
 ./gradlew run
 ```
-and go to [http://localhost:59125](localhost:59125).
+and go to [localhost:59125](http://localhost:59125).
 
 ## Installation of the HMM based voice
 ### Install docker
