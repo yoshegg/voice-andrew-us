@@ -38,7 +38,7 @@ and go to [http://localhost:59125](localhost:59125).
 ### Install the required container / image
 Execute the dockerfile contained in the root folder of the projet (which originates from [https://github.com/psibre/marytts-dockerfiles](https://github.com/psibre/marytts-dockerfiles)) and run it with
 ```
-docker build --build-arg HTKUSER=***** --build-arg HTKPASSWORD=***** -t marytts-builder-hsmm .
+sudo docker build --build-arg HTKUSER=***** --build-arg HTKPASSWORD=***** -t marytts-builder-hsmm .
 ```
 replace `HTKUSER` and `HTKPASSWORD` with the desired credentials ([Registration](http://htk.eng.cam.ac.uk/register.shtml) needed).
 
