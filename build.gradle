@@ -117,8 +117,13 @@ task remapLabels(type: Copy) {
     }
 }
 
+task copyDockerShellScriptToBuild(type: Copy) {
+  from "dockerScript.sh"
+  into "build/dockerScript.sh"
+}
+
 legacyInit {
-    dependsOn unpackWav, unpackText, remapLabels
+    dependsOn unpackWav, unpackText, remapLabels, copyDockerShellScriptToBuild
 }
 
 // this is a fix for maryTTS
