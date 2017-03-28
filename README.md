@@ -56,6 +56,6 @@ Run the `HMMVoiceFeatureSelection` component.
 
 Go to the build folder and start the docker container. By using the following command, you automatically execute the needed tasks:
 ```
-sudo docker run -v `pwd`:`pwd` -w `pwd` -it 5.2 /bin/bash 'dockerScript.sh'
+sudo docker run -v `pwd`:`pwd` -w `pwd` -it marytts-builder-hsmm /bin/bash 'dockerScript.sh'
 ```
 (the `dockerScript.sh` contained in the root folder of the project is the one that is tracked by git. Running `./gradlew legacyInit` copies it to the build folder)
