@@ -108,5 +108,5 @@ ByteValuedFeatureProcessors
 ShortValuedFeatureProcessors
 ContinuousFeatureProcessors
 100 linear | unit_duration
-100 linear | unit_logf0
+1000 linear | unit_logf0
 100 linear | unit_logf0delta
