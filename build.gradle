@@ -123,8 +123,15 @@ task copyDockerShellScriptToBuild(type: Copy) {
   include "dockerScript.sh"
 }
 
+task copyHTSGradleScriptToMaryBuild(type: Copy) {
+  from "."
+  into "build/mary/voice-endru/"
+  include "runHTSVoiceScript.txt"
+  rename ('runHTSVoiceScript.txt', 'build.gradle')
+}
+
 legacyInit {
-    dependsOn unpackWav, unpackText, remapLabels, copyDockerShellScriptToBuild
+    dependsOn unpackWav, unpackText, remapLabels, copyDockerShellScriptToBuild, copyHTSGradleScriptToMaryBuild
 }
 
 // this is a fix for maryTTS
