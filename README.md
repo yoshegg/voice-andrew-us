@@ -59,3 +59,28 @@ Go to the build folder and start the docker container. By using the following co
 sudo docker run -v `pwd`:`pwd` -w `pwd` -it marytts-builder-hsmm /bin/bash 'dockerScript.sh'
 ```
 (the `dockerScript.sh` contained in the root folder of the project is the one that is tracked by git. Running `./gradlew legacyInit` copies it to the build folder)
+
+Alternatively you cant run the following command:
+```
+sudo docker run -v $PWD:$PWD -t marytts-builder-hsmm bash -c "cd $PWD; /marytts/target/marytts-builder-5.2/bin/voiceimport.sh HMMVoiceDataPreparation HMMVoiceConfigure HMMVoiceMakeData HMMVoiceMakeVoice" 
+```
+
+You can track the process by running the following in another terminal window:
+```
+tail -f hts/log-XXX
+```
+
+### Compile the voice:
+```
+docker run -v $PWD:$PWD -t marytts-builder-hsmm bash -c "cd $PWD; /marytts/target/marytts-builder-5.2/bin/voiceimport.sh HMMVoiceCompiler"
+```
+It won't succeed but don't worry, that's perfectly fine.
+
+### Run the voice
+**You may now have to change permissions because the created folders belong to root**
+```
+chown christophe:christophe -R build/mary/voice-XXX
+```
+
+Run the gradle script in the folder `build/mary/voice-XXX` with `gradle run` or `gradle build`.
+and go to [localhost:59125](http://localhost:59125).
