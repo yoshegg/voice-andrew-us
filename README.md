@@ -40,6 +40,20 @@ To actually test the voice, enter
 ```
 and go to [localhost:59125](http://localhost:59125).
 
+## Evaluate the voice
+run
+```
+./gradlew runCrossValidation
+```
+
+This will evaluate the voice by regenerating the utterances while blacklisting the original ones. 
+The output is quite self-explaining.
+
+In order to plot this data, or just save it, do the following:
+```
+./gradlew rCV > output.txt ; tail -n +6 output.txt | head -n -4 > evaluation/results.txt
+```
+
 # HTS based voice
 
 ## Install docker
