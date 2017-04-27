@@ -154,6 +154,7 @@ configurations.all {
     }
 }
 
+// this generates two files that can be modified in order to modify our voice's output
 generateVoiceConfig {
     afterEvaluate {
         config << [
@@ -187,6 +188,7 @@ task generateCrossvalidationInputFiles {
 }
 
 task synthesizeCrossValidationAudio {
+    dependsOn  generateCrossvalidationInputFiles
     ext.destDir = file("$buildDir/crossvalidation/output")
     outputs.dir destDir
     doLast {
@@ -211,11 +213,13 @@ task synthesizeCrossValidationAudio {
 }
 
 task copyCrossValidationReferenceData(type: Copy) {
+    dependsOn synthesizeCrossValidationAudio
     from "$buildDir/wav", "$buildDir/lab"
     into "$buildDir/crossvalidation/reference"
 }
 
 task runCrossValidation(type: JavaExec) {
+    dependsOn copyCrossValdiationReferenceData
     def allophonesFile = file("$buildDir/crossvalidation/allophones.en_US.xml")
     classpath configurations.runtime
     main 'marytts.signalproc.analysis.distance.RmsLsfDistortionComputer'
