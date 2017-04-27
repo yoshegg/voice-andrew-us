@@ -219,7 +219,7 @@ task copyCrossValidationReferenceData(type: Copy) {
 }
 
 task runCrossValidation(type: JavaExec) {
-    dependsOn copyCrossValdiationReferenceData
+    dependsOn copyCrossValidationReferenceData
     def allophonesFile = file("$buildDir/crossvalidation/allophones.en_US.xml")
     classpath configurations.runtime
     main 'marytts.signalproc.analysis.distance.RmsLsfDistortionComputer'
