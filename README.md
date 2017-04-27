@@ -58,7 +58,7 @@ The output is quite self-explaining. In order to do so, mary-tts must be running
 
 In order to save this data, do the following:
 ```
-./gradlew rCV > evaluation/temp.txt ; tail -n +6 evaluation/output.txt | head -n -4 > evaluation/results.txt ; rm evaluation/temp.txt
+./gradlew rCV > evaluation/temp.txt ; tail -n +6 evaluation/temp.txt | head -n -4 > evaluation/results.txt ; rm evaluation/temp.txt
 ```
 
 Plotting this data can be done with our `plotting.py` script (Python 3).
