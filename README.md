@@ -14,7 +14,7 @@ Notes for the group report can be found [here](https://hackmd.io/OwMxGMCMCYDYFMC
 ## Dependencies
 In order to work with this voice, the following command must be executed (on ubuntu) to get the desired dependencies:
 ```
-sudo apt sox praat speech-tools
+sudo apt install sox praat speech-tools
 ```
 There may be other requirements which need to be obtained via your package manager (e.g. `apt`).
 
