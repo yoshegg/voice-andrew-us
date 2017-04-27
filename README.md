@@ -5,15 +5,23 @@
 | Group 1                                                 |
 | Christophe Biwer, Dana Ruiter, Andrew Johnson           |
 
+## Data repository
+The data repository called `voice-andrew-us` can be found [here](https://github.com/yoshegg/voice-andrew-us-data).
+
 ## Report
 Notes for the group report can be found [here](https://hackmd.io/OwMxGMCMCYDYFMC0AOAjMALIjAGewUBWATgJGmGkNWhwGYdl4g==) (registration required to edit).
 
-## Dependencies
+# Dependencies
 In order to work with this voice, the following command must be executed (on ubuntu) to get the desired dependencies:
 ```
 sudo apt sox praat speech-tools
 ```
-There may be other requirements which need to be obtained via `apt`.
+There may be other requirements which need to be obtained via your package manager (e.g. `apt`).
+
+# Unit-selection based voice
+
+## Retrieve the repository
+`cd` to your desired directory and execute `git clone https://github.com/yoshegg/voice-andrew-us.git`. `cd` to the new directory. 
 
 ## Installation of the unit selection based voice
 Run 
@@ -24,6 +32,7 @@ followed by
 ```
 ./gradlew build
 ```
+(which may take some time depending on your computer).
 
 To actually test the voice, enter
 ```
