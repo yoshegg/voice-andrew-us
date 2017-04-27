@@ -61,5 +61,7 @@ def plot_all(data_file, metric="mean"):
     
 
 if __name__ == "__main__":
+    plt.clf()
     plot_all("results.txt")
+    plt.clf()
     plot_topn("results.txt", topn=10)
