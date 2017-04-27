@@ -49,11 +49,12 @@ and go to [localhost:59125](http://localhost:59125).
 ## Evaluate the voice
 run
 ```
+./gradlew run & disown
 ./gradlew runCrossValidation
 ```
 
 This will evaluate the voice by regenerating the utterances while blacklisting the original ones. 
-The output is quite self-explaining.
+The output is quite self-explaining. In order to do so, mary-tts must be running (which can of course also be done in another terminal.)
 
 In order to save this data, do the following:
 ```
