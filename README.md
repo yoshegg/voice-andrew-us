@@ -70,7 +70,7 @@ python3 plotting.py
 
 # HTS based voice
 
-**Keep in mind that building the HTS voice actually breaks the Unit selection voice. You might want to backup the build folder to easily switch between both versions of our voice.**
+**Keep in mind that building the HTS voice actually breaks the Unit selection voice. You might want to backup the `build` folder to easily switch between both versions of our voice.**
 
 ## Install docker
 ... as explained [here](https://docs.docker.com/engine/installation/)
