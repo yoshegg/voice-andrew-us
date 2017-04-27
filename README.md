@@ -18,6 +18,12 @@ sudo apt sox praat speech-tools
 ```
 There may be other requirements which need to be obtained via your package manager (e.g. `apt`).
 
+The evaluation script is written in Python 3 and needs `matplotlib` and `python3-tk`:
+```
+sudo pip3 install matplotlib
+sudo apt install python3-tk
+```
+
 # Unit-selection based voice
 
 ## Retrieve the repository
@@ -49,10 +55,17 @@ run
 This will evaluate the voice by regenerating the utterances while blacklisting the original ones. 
 The output is quite self-explaining.
 
-In order to plot this data, or just save it, do the following:
+In order to save this data, do the following:
 ```
-./gradlew rCV > output.txt ; tail -n +6 output.txt | head -n -4 > evaluation/results.txt
+./gradlew rCV > evaluation/temp.txt ; tail -n +6 evaluation/output.txt | head -n -4 > evaluation/results.txt ; rm evaluation/temp.txt
 ```
+
+Plotting this data can be done with our `plotting.py` script (Python 3).
+```
+cd evaluation
+python3 plotting.py
+```
+
 
 # HTS based voice
 
