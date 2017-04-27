@@ -11,7 +11,7 @@ The data repository called `voice-andrew-us` can be found [here](https://github.
 ## Report
 Notes for the group report can be found [here](https://hackmd.io/OwMxGMCMCYDYFMC0AOAjMALIjAGewUBWATgJGmGkNWhwGYdl4g==) (registration required to edit).
 
-# Dependencies
+## Dependencies
 In order to work with this voice, the following command must be executed (on ubuntu) to get the desired dependencies:
 ```
 sudo apt sox praat speech-tools
